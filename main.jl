@@ -15,4 +15,5 @@ x = [0.0, 1.0]
 x = rand(10000)
 # Profiling
 Profile.Allocs.clear()
-@show ForwardDiff.derivative.(abs, x, Neighborhood())
+Profile.Allocs.@profile ForwardDiff.derivative.(abs, x, Neighborhood())
+PProf.Allocs.pprof()
