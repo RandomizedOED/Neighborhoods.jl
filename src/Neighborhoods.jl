@@ -9,15 +9,15 @@ greet() = print("Hello World!")
 abstract type AbstractNeighborhood end
 
 struct Neighborhood{T} <: AbstractNeighborhood
-    x::SVector{3,T}
+    x::Vector{T}
 end
 
 function Neighborhood()
-    return Neighborhood(SVector{3,Nothing}(nothing, nothing, nothing))
+    return Neighborhood(Vector{Nothing}([nothing, nothing, nothing]))
 end
 
 function Neighborhood(x::T) where {T}
-    return Neighborhood(SVector{3,T}(x, x-eps(T), x+eps(T)))
+    return Neighborhood(Vector{T}([x, x-eps(T), x+eps(T)]))
 end
 
 # Polutes outer scope
