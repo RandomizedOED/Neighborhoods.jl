@@ -2,7 +2,6 @@ module Neighborhoods
 
 using ForwardDiff
 using LinearAlgebra
-using StaticArrays
 
 greet() = print("Hello World!")
 

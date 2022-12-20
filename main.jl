@@ -11,3 +11,8 @@ x = 0.0
 
 x = [0.0, 1.0]
 @show ForwardDiff.derivative.(abs, x, Neighborhood())
+
+x = rand(10000)
+# Profiling
+Profile.Allocs.clear()
+@show ForwardDiff.derivative.(abs, x, Neighborhood())
