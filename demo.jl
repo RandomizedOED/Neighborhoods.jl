@@ -53,5 +53,8 @@ x = rand(10000)
 Profile.Allocs.clear()
 Profile.Allocs.@profile ForwardDiff.jacobian(dotf, x)
 results = Profile.Allocs.fetch()
-last(sort(results.allocs, by=x->x.size))
+# No allocations recorded on GitHub for whatever reason. Hence removing when not interactive
+if isinteractive()
+    last(sort(results.allocs, by=x->x.size))
+end
 PProf.Allocs.pprof()
