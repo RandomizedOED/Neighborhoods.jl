@@ -22,24 +22,32 @@ x = [2.0,3.0]
 @show J = ForwardDiff.jacobian(dotf, x)
 
 @show @code_llvm dotf(x)
-@show dotf(x |> CuArray)
+if CUDA.has_cuda_gpu()
+    @show dotf(x |> CuArray)
+end
 
 # Profiling
 @time ForwardDiff.jacobian(dotf, x)
-@time ForwardDiff.jacobian(dotf, x |> CuArray)
+if CUDA.has_cuda_gpu()
+    @time ForwardDiff.jacobian(dotf, x |> CuArray)
+end
 x = rand(10000)
 @benchmark ForwardDiff.jacobian(dotf, x)
-@benchmark ForwardDiff.jacobian(dotf, x |> CuArray)
+if CUDA.has_cuda_gpu()
+    @benchmark ForwardDiff.jacobian(dotf, x |> CuArray)
+end
 
 x = rand(10000)
 Profile.clear()
 Profile.@profile ForwardDiff.jacobian(dotf, x)
 pprof()
 
-x = rand(10000)
-Profile.clear()
-Profile.@profile ForwardDiff.jacobian(dotf, x |> CuArray)
-pprof()
+if CUDA.has_cuda_gpu()
+    x = rand(10000)
+    Profile.clear()
+    Profile.@profile ForwardDiff.jacobian(dotf, x |> CuArray)
+    pprof()
+end
 
 x = rand(10000)
 Profile.Allocs.clear()

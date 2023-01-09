@@ -2,6 +2,8 @@ using ForwardDiff
 using Neighborhoods
 using CUDA
 using LinearAlgebra
+using Profile
+using PProf
 
 x = 0.0
 
